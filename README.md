@@ -5,7 +5,6 @@ The following come bundled with the image:
 
 ruby 2.5
 node 9.9
-node-sass
 angular-cli
 gulp-cli
 and common tools for building from source
