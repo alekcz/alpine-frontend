@@ -1,7 +1,13 @@
 FROM ruby:2.5-alpine
 
-ENV VERSION=v9.10.0 NPM_VERSION=5 YARN_VERSION=latest
+RUN apk --update add ca-certificates curl wget bash make gcc musl-dev libgcc g++ python git nodejs && \
+    addgroup -g 1000 -S coolguy && \
+    adduser -u 1000 -S coolguy -G coolguy && mkdir /home/coolguy/.npm-global && \
+    chown -R coolguy:coolguy /home/coolguy 
 
-RUN apk --update add --no-cache ca-certificates curl wget bash make gcc musl-dev libgcc g++ python git nodejs && \
-    npm install -g node-sass gulp-cli @angular/cli@1.5.0
+ENV PATH=/home/coolguy/.npm-global/bin:$PATH
+ENV NPM_CONFIG_PREFIX=/home/coolguy/.npm-global
+
+USER coolguy
+RUN npm install --ignore-optional -g gulp-cli @angular/cli@1.5.0 node-sass
 
